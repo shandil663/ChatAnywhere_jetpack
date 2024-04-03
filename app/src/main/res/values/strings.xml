@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">ChatAnywhere</string>
+    <string name="weltext">Hello,</string>
+    <string name="Askdetails">Create an account</string>
+</resources>
