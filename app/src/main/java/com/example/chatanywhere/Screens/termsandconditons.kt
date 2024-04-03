@@ -11,11 +11,11 @@ import androidx.compose.ui.unit.dp
 import com.example.chatanywhere.Components.HeadingTextComponent
 
 @Composable
-fun term() {
+fun term(nm: String?) {
     Surface(modifier = Modifier
         .fillMaxSize()
         .background(color = Color.White)
         .padding(20.dp)) {
-HeadingTextComponent(value = "Welcome to terms and conditions")
+HeadingTextComponent(value = "Welcome to terms and conditions $nm")
     }
 }

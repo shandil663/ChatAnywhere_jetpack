@@ -15,7 +15,7 @@ fun loginpage(){
         color= Color.White
     ){
 
-        SignUp()
+
     }
 
 }
