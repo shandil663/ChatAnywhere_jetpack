@@ -45,7 +45,7 @@ Column (modifier=Modifier.fillMaxSize()){
     PasswordTextField(labelval ="Password", painterResource = painterResource(id = R.drawable.password) )
     CheckBoxhere("By continuing you accept our privacy policy and term of use",onClick)
     Spacer(modifier = Modifier.height(35.dp))
-    Buttons(colorResource(id = R.color.purple_500))
+    Buttons(colorResource(id = R.color.purple_500),"SignUp")
     Spacer(modifier = Modifier.height(35.dp))
     Dividercomp()
     Spacer(modifier = Modifier.height(35.dp))

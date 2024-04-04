@@ -57,7 +57,9 @@ fun MainController() {
             term(nm)
         }
         composable(route = "Login") {
-            LoginScreen()
+            LoginScreen {
+                navController.navigate("Sign")
+            }
         }
     }
 

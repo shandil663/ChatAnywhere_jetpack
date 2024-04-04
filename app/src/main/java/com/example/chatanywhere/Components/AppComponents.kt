@@ -3,7 +3,7 @@
 package com.example.chatanywhere.Components
 
 import android.util.Log
-import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -11,13 +11,13 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Divider
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -33,12 +33,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
@@ -123,7 +125,9 @@ fun MyTextField(labelval: String, painterResource: Painter) {
             focusedContainerColor = colorResource(id = R.color.bgforedittext),
             unfocusedContainerColor = colorResource(id = R.color.bgforedittext)
         ),
-        keyboardOptions = KeyboardOptions.Default,
+        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+        singleLine = true,
+        maxLines = 1,
         value = textValue.value,
         onValueChange = { textValue.value = it }
     )
@@ -131,6 +135,7 @@ fun MyTextField(labelval: String, painterResource: Painter) {
 
 @Composable
 fun PasswordTextField(labelval: String, painterResource: Painter) {
+    val localFocusManager= LocalFocusManager.current
     val password = remember {
         mutableStateOf("")
     }
@@ -182,7 +187,10 @@ fun PasswordTextField(labelval: String, painterResource: Painter) {
             focusedContainerColor = colorResource(id = R.color.bgforedittext),
             unfocusedContainerColor = colorResource(id = R.color.bgforedittext)
         ),
-        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password, imeAction = ImeAction.Done),
+        singleLine = true,
+keyboardActions = KeyboardActions { localFocusManager.clearFocus() },
+        maxLines = 1,
         value = password.value,
         onValueChange = { password.value = it }
     )
@@ -250,7 +258,7 @@ fun ClickableTextComp(value: String, onClick: (Name: String) -> Unit) {
 
 @Composable
 
-fun Buttons(color: Color) {
+fun Buttons(color: Color= colorResource(id = R.color.purple_500), text:String) {
     Button(
         onClick = {
         },
@@ -260,15 +268,16 @@ fun Buttons(color: Color) {
         contentPadding = PaddingValues(),
         colors = ButtonDefaults.buttonColors(color)
     ) {
-        HeadingTextComponent(value = "Sign Up", color = Color.White)
+        HeadingTextComponent(value = "$text", color = Color.White)
 
     }
 }
 
 @Composable
 fun Dividercomp() {
-    Row(modifier = Modifier.fillMaxWidth()
-    , verticalAlignment = Alignment.CenterVertically) {
+    Row(
+        modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically
+    ) {
 
 
         Divider(
@@ -305,17 +314,64 @@ fun ClickableTextComp1(value: String, function: () -> Unit) {
         }
 
     }
-    ClickableText(text = annotatedString, onClick = { offset ->
-        annotatedString.getStringAnnotations(offset, offset).firstOrNull()?.also { span ->
+    ClickableText(
+        text = annotatedString, onClick = { offset ->
+            annotatedString.getStringAnnotations(offset, offset).firstOrNull()?.also { span ->
 
-            Log.d("Clicktext", "{$span}")
-            if(span.item=="Login"){
-                function()
+                Log.d("Clicktext", "{$span}")
+                if (span.item == "Login") {
+                    function()
+                }
             }
-        }
-    }, modifier = Modifier.fillMaxWidth()
-    , style = TextStyle(
+        }, modifier = Modifier.fillMaxWidth(), style = TextStyle(
             fontSize = 15.sp,
-        textAlign = TextAlign.Center
-    ))
+            textAlign = TextAlign.Center
+        )
+    )
+}
+
+@Composable
+fun ClickableTextComp2(value: String, function: () -> Unit) {
+    val inti = "Don't have an account?"
+    val term = "SignUp"
+    val annotatedString = buildAnnotatedString {
+        append(inti)
+        withStyle(
+            style = SpanStyle(
+                colorResource(id = R.color.purple_500)
+            )
+        ) {
+            pushStringAnnotation(tag = term, annotation = term)
+            append(term)
+        }
+
+    }
+    ClickableText(
+        text = annotatedString, onClick = { offset ->
+            annotatedString.getStringAnnotations(offset, offset).firstOrNull()?.also { span ->
+
+                Log.d("Clicktext", "{$span}")
+                if (span.item == "SignUp") {
+                    function()
+                }
+            }
+        }, modifier = Modifier.fillMaxWidth(), style = TextStyle(
+            fontSize = 15.sp,
+            textAlign = TextAlign.Center
+        )
+    )
+}
+
+@Composable
+fun Wholetextclickable(onclick: () -> Unit) {
+    Row(modifier = Modifier.clickable {
+        onclick()
+    }) {
+        HeadingTextComponent(
+            value = "Forget your Password?",
+            color = colorResource(id = R.color.purple_500),
+            fontsize = 20
+        )
+    }
+
 }
