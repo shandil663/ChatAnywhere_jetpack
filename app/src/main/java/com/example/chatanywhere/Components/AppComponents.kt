@@ -100,7 +100,7 @@ fun HeadingTextComponent(
 
 @Composable
 
-fun MyTextField(labelval: String, painterResource: Painter) {
+fun MyTextField(labelval: String, painterResource: Painter, onTextSelected: (String) -> Unit) {
     val textValue = remember {
         mutableStateOf("")
     }
@@ -129,13 +129,20 @@ fun MyTextField(labelval: String, painterResource: Painter) {
         singleLine = true,
         maxLines = 1,
         value = textValue.value,
-        onValueChange = { textValue.value = it }
+        onValueChange = {
+            textValue.value = it
+
+            onTextSelected(it)
+        }
     )
 }
 
 @Composable
-fun PasswordTextField(labelval: String, painterResource: Painter) {
-    val localFocusManager= LocalFocusManager.current
+fun PasswordTextField(
+    labelval: String, painterResource: Painter,
+    onTextSelected: (String) -> Unit
+) {
+    val localFocusManager = LocalFocusManager.current
     val password = remember {
         mutableStateOf("")
     }
@@ -187,12 +194,18 @@ fun PasswordTextField(labelval: String, painterResource: Painter) {
             focusedContainerColor = colorResource(id = R.color.bgforedittext),
             unfocusedContainerColor = colorResource(id = R.color.bgforedittext)
         ),
-        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password, imeAction = ImeAction.Done),
+        keyboardOptions = KeyboardOptions(
+            keyboardType = KeyboardType.Password,
+            imeAction = ImeAction.Done
+        ),
         singleLine = true,
-keyboardActions = KeyboardActions { localFocusManager.clearFocus() },
+        keyboardActions = KeyboardActions { localFocusManager.clearFocus() },
         maxLines = 1,
         value = password.value,
-        onValueChange = { password.value = it }
+        onValueChange = {
+            password.value = it
+            onTextSelected(it)
+        }
     )
 }
 
@@ -258,9 +271,14 @@ fun ClickableTextComp(value: String, onClick: (Name: String) -> Unit) {
 
 @Composable
 
-fun Buttons(color: Color= colorResource(id = R.color.purple_500), text:String) {
+fun Buttons(
+    color: Color = colorResource(id = R.color.purple_500),
+    text: String,
+    onButtonClicked: () -> Unit
+) {
     Button(
         onClick = {
+                  onButtonClicked.invoke()
         },
         modifier = Modifier
             .fillMaxWidth()

@@ -40,18 +40,28 @@ fun LoginScreen(onclick: () -> Unit) {
 
             MyTextField(
                 labelval = "Email",
-                painterResource = painterResource(id = R.drawable.email)
+                painterResource = painterResource(id = R.drawable.email),
+
+                onTextSelected = {
+
+                }
             )
             PasswordTextField(
                 labelval = "Password",
                 painterResource = painterResource(id = R.drawable.password)
+                ,
+                onTextSelected = {
+
+                }
             )
             Spacer(modifier = Modifier.height(28.dp))
             Wholetextclickable(onclick)
 
             Spacer(modifier = Modifier.height(100.dp))
 
-            Buttons(color = colorResource(id = R.color.purple_500), text = "Login")
+            Buttons(color = colorResource(id = R.color.purple_500), text = "Login", onButtonClicked = {
+
+            })
             Spacer(modifier = Modifier.height(30.dp))
             Dividercomp()
             Spacer(modifier = Modifier.height(30.dp))
