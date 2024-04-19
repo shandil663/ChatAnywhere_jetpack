@@ -42,16 +42,39 @@ class LoginViewModel : ViewModel() {
                 printState()
             }
 
-            is UIEvent.RegisterButton->{
+            is UIEvent.RegisterButton -> {
                 signUp()
             }
         }
     }
 
     private fun signUp() {
-        Log.d(TAG,"Button logic")
+        Log.d(TAG, "Button logic")
         printState()
+        ValidateData()
 
+    }
+
+    private fun ValidateData() {
+        val fnameresult = Validator.validateFirstName(
+            fName = registerationUIState.value.firstName
+        )
+        val lnameresult = Validator.validateLasttName(
+            lName = registerationUIState.value.lastName
+        )
+        val emailresult = Validator.validateEmail(
+            email = registerationUIState.value.email
+        )
+        val passwordresult = Validator.validatePassword(
+            password = registerationUIState.value.password
+        )
+
+        registerationUIState.value = registerationUIState.value.copy(
+            ferror = fnameresult.status,
+            lerror = lnameresult.status,
+            emailerror = emailresult.status,
+            passworderror = passwordresult.status
+        )
     }
 
     private fun printState() {

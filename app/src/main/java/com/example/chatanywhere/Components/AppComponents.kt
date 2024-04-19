@@ -100,7 +100,8 @@ fun HeadingTextComponent(
 
 @Composable
 
-fun MyTextField(labelval: String, painterResource: Painter, onTextSelected: (String) -> Unit) {
+fun MyTextField(labelval: String, painterResource: Painter, onTextSelected: (String) -> Unit,
+                errorStatus:Boolean) {
     val textValue = remember {
         mutableStateOf("")
     }
@@ -140,7 +141,8 @@ fun MyTextField(labelval: String, painterResource: Painter, onTextSelected: (Str
 @Composable
 fun PasswordTextField(
     labelval: String, painterResource: Painter,
-    onTextSelected: (String) -> Unit
+    onTextSelected: (String) -> Unit,
+    errorStatus:Boolean
 ) {
     val localFocusManager = LocalFocusManager.current
     val password = remember {

@@ -52,13 +52,16 @@ fun SignUp(onClick: (Name: String) -> Unit, function: () -> Unit,loginViewModel:
                 onTextSelected = {
 loginViewModel.onEvent(UIEvent.FirstNameChanged(it))
                 }
+                ,
+               errorStatus =  loginViewModel.registerationUIState.value.ferror
             )
             MyTextField(
                 labelval = "Last name",
                 painterResource = painterResource(id = R.drawable.last),
                 onTextSelected = {
                     loginViewModel.onEvent(UIEvent.LastNameChanged(it))
-                }
+                },
+                errorStatus =  loginViewModel.registerationUIState.value.lerror
 
 
             )
@@ -67,7 +70,8 @@ loginViewModel.onEvent(UIEvent.FirstNameChanged(it))
                 painterResource = painterResource(id = R.drawable.email),
                 onTextSelected = {
                     loginViewModel.onEvent(UIEvent.EmailChanged(it))
-                }
+                },
+                errorStatus =  loginViewModel.registerationUIState.value.emailerror
             )
             PasswordTextField(
                 labelval = "Password",
@@ -75,7 +79,8 @@ loginViewModel.onEvent(UIEvent.FirstNameChanged(it))
 
                 onTextSelected = {
                     loginViewModel.onEvent(UIEvent.PasswordChanged(it))
-                }
+                },
+                errorStatus =  loginViewModel.registerationUIState.value.passworderror
 
             )
             CheckBoxhere("By continuing you accept our privacy policy and term of use", onClick)
